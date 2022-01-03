@@ -1,0 +1,497 @@
+---
+title: " Statistical Analysis of Life Expectancy DataSet"
+author: "Group 3"
+date: "24/11/2021"
+output:powerpoint_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+${\bf Submitted\ by:}$
+
+-   Avinandan Patel(215280043)
+-   Syliva Vincent(215280005)
+-   Vishakha Verma(215280019)
+-   Inderesh Singh(215280011)
+-   Raj Khandagale(215280002)
+-   Harsh jaiswal(215280022)
+
+${\bf Life\ Expectancy: Exploratory\ Data\ Analysis}$
+
+The Global Health Observatory (GHO) data repository under World Health Organization (WHO) keeps track of the health status as well as many other related factors for all countries The data-sets are made available to public for the purpose of health data analysis. The data-set related to life expectancy, health factors for 193 countries has been collected from the same WHO data repository website and its corresponding economic data was collected from United Nation website. Among all categories of health-related factors only those critical factors were chosen which are more representative. It has been observed that in the past 15 years , there has been a huge development in health sector resulting in improvement of human mortality rates especially in the developing nations in comparison to the past 30 years
+
+${\bf{\large Goal:}\ Find\ a\ set\ of\ features\ that\ affect\ Life\ Expectancy.}$
+
+${\bf\large Contents:}$
+
+${\bf 1.\  Data\ Cleaning:}$
+
+-   Detect and Deal with the Missing values
+
+-   Detect the distribution of each factor
+
+${\bf 2.\ Data\ Exploration\ and\ Visualization:}$
+
+-   What is the Life Expectancy Country-wise
+
+-   How different dieseases affect life expectancy in developed and developing countries
+
+-   What effect does Schooling and Alcohol have on Life Expectancy
+
+${\bf 3.\ Fitting\ a\ multiple\ regression\ model }$
+
+-   Build a Base Model 1
+-   Plotting The Model1
+-   Multicollinearity Test
+-   Build Improved Model 2
+-   Checking Interaction Terms
+-   Build Improved Model 3
+-   Plotting the Model 3
+-   Fixing Polynomial Terms
+-   Build Improved Model 4
+-   Plotting The Model 4
+-   Conclusion of The Final Model
+
+${\bf 4.\ Summary:}$
+
+${\Large\bf Importing\ the\ dataset}$
+
+```{r}
+
+data <- read.csv("C:/Users/admin/Desktop/project R/Life Expectancy Data.csv")
+```
+
+${\bf\Large Section\ 1: Data\ Cleaning}$
+
+In order to properly clean the data, it is important to understand the variables presented in the data. There are a number of things important to know about each variable:
+
+-   What does the variable mean and what type of variable is it (Nominal/Ordinal/Interval/Ratio)?
+
+-   Does the variable have missing values? If so, what should be done about them?
+
+${\bf\large Description\ about\ the\ dataset:}$
+
+This collection is made up of data collected by the World Health Organization from various nations all over the world (WHO for short). The information is a compilation of several indicators for a certain nation and year. In essence, the data is a time series of several metrics divided by nation.
+
+The string values for the columns/variables themselves aren't particularly 'clean,' so here's a little cleaning of the column/variable titles before we go into the variable descriptions.
+
+```{r}
+dim(data)
+View(data)
+```
+
+${\bf Number\ of\ sample\ points:}$ = 2938
+
+${\bf Number\ of\ Variables:}$ = 22
+
+${\bf\underline {Name\ of\ the\ Variables}:}$
+
+```{r}
+colnames(data)
+```
+
+${\bf\large Variable\ Descriptions:}$
+
+${\bf\underline{Nominal\ Variable:}}$
+
+-   ${\bf Country: }$ The country in which the indicators are from (i.e. United States of America or Congo
+-   ${\bf Status:}$ Whether a country is considered to be 'Developing' or 'Developed' by WHO standards
+
+${\bf\underline{Ordinal\ Variable:} }$
+
+-   ${\bf Year:}$ The calendar year the indicators are from (ranging from 2000 to 2015)
+
+-   ${\bf BMI}$ Average Body Mass Index (BMI) of a country's total population
+
+${\bf\underline{Ratio:}}$
+
+-   ${\bf Life\ Expectancy:}$ The life expectancy of people in years for a particular country and year
+
+-   ${\bf Adult\ Mortality:}$ The adult mortality rate per 1000 population (i.e. number of people dying between 15 and 60 years per 1000 population); if the rate is 263 then that means 263 people will die out of 1000 between the ages of 15 and 60; another way to think of this is that the chance an individual will die between 15 and 60 is 26.3%
+
+-   ${\bf Infant\ Deaths:}$ Number of infant deaths per 1000 population; similar to above, but for infants
+
+-   ${\bf Alcohol:}$ A country's alcohol consumption rate measured as liters of pure alcohol consumption per capita
+
+-   ${\bf Percentage\ Expenditure:}$ Expenditure on health as a percentage of Gross Domestic Product (gdp)
+
+-   ${\bf Hepatitis\ b:}$ Number of 1 year olds with Hepatitis B immunization over all 1 year olds in population
+
+-   ${\bf Measles:}$ Number of reported Measles cases per 1000 population
+
+-   ${\bf Under\ five\ deaths:}$ Number of people under the age of five deaths per 1000 population
+
+-   ${\bf Polio:}$ Number of 1 year olds with Polio immunization over the number of all 1 year olds in population
+
+-   ${\bf Total\ Expenditure:}$ Government expenditure on health as a percentage of total government expenditure
+
+-   ${\bf Diphtheria:}$ Diphtheria tetanus toxoid and pertussis (DTP3) immunization rate of 1 year olds
+
+-   ${\bf Hiv/Aids:}$ - deaths per 1000 live births caused by HIV/AIDS for people under 5; number of people under 5 who die due to HIV/AIDS per 1000 births
+
+-   ${\bf Gdp}$- Gross Domestic Product per capita
+
+-   ${\bf population:}$- population of a country
+
+-   ${\bf thinness\ 10-\ 19\ years}$ rate of thinness among people aged 10-19
+
+-   ${\bf thinness\ 5-\ 9\ years}$rate of thinness among people aged 5-9
+
+-   ${\bf income\ composition\ of\ resources}$ Human Development Index in terms of income composition of resources (index ranging from 0 to 1)
+
+-   ${\bf Schooling}$ average number of years of schooling of a population
+
+${\bf\large Summary\ of\ the\ data}$
+
+```{r}
+summary(data)
+```
+
+${\bf\Large Missing\ values}$
+
+There are few things that must be done concerning missing values:
+
+-   Detection of missing values Find nulls Could a null be signified by anything other than null? Zero values perhaps?
+
+-   Dealing with missing values Fill nulls? Impute or Interpolate Eliminate nulls?
+
+${\bf\Large Missing\ Values\ Detection}$
+
+The simplest and quickest way here is to do a quick is.na() and sum(is.na()) provides total number of missing values.
+
+```{r}
+mydata <- data
+sum(is.na(mydata))
+```
+
+There are 2563 number of Missing values in our model so removing of these values from our dataset means loosing of many information of data from our model. so instead of dropping we do imputation at the place of missing values.
+
+```{r}
+df1=data
+for(i in 1:ncol(df1)){
+  df1[is.na(df1[,i]),i] <- median(df1[,i] , na.rm = T)
+}
+data=df1
+sum(is.na(df1))
+mydata=df1
+```
+
+```{r}
+library(tidyverse)
+
+```
+
+${\bf\Large Data\ Visualisation:}$
+
+```{r}
+hist(mydata$Adult.Mortality,main="Histogram of Adult Mortality",xlab="Adult Mortality",col=5,freq=FALSE)#Normal distribution
+lines(density(mydata$Adult.Mortality),col=2,lwd=3)
+
+
+hist(mydata$infant.deaths,main="Histogram of infant.deaths",xlab="infant.deaths",col=5,freq =FALSE)#Skewed at right
+lines(density(mydata$infant.deaths),col=2,lwd=3)
+
+hist(mydata$Alcohol,main="Histogram of Alcohol",xlab="Alcohol",col=5,freq=F)#Skewed at right
+lines(density(mydata$Alcohol),col=2,lwd=3)
+
+hist(mydata$percentage.expenditure,main="Histogram of percentage.expenditure",xlab="percentage.expenditure",col=5,freq=F )#Skewed at right
+lines(density(mydata$percentage.expenditure),col=2,lwd=3)
+
+hist(mydata$Hepatitis.B,main="Histogram of Hepatitis.B",xlab="Hepatitis.B",col=5,freq=F)#Skewed at left
+lines(density(mydata$Hepatitis.B),col=2,lwd=3)
+
+hist(mydata$Measles,main="Histogram of Measles",xlab="Measles",col=5,freq=F)#Skewed at right
+lines(density(mydata$Measles),col=2,lwd=3)
+
+hist(mydata$BMI,main="Histogram of BMI",xlab="BMI",col=5,freq=F)#Bimodal
+lines(density(mydata$BMI),col=2,lwd=3)
+
+hist(mydata$under.five.deaths,main="Histogram of under five deaths",xlab="under five deaths",col=5,freq=F)
+lines(density(mydata$under.five.deaths),col=2,lwd=3)
+
+hist(mydata$Polio,main="Histogram of Polio",xlab="Polio",col=5,freq=F)#Skewed at left
+lines(density(mydata$Polio),col=2,lwd=3)
+
+hist(mydata$Total.expenditure,main="Histogram of Total.expenditure",xlab="Total.expenditure",col=5,freq=F)#Normal distribution
+lines(density(mydata$Total.expenditure),col=2,lwd=3)
+
+hist(mydata$Diphtheria,main="Histogram of Diphtheria",xlab="Diphtheria",col=5,freq=F)#Skewed at left
+lines(density(mydata$Diphtheria),col=2,lwd=3)
+
+hist(mydata$HIV.AIDS,main="Histogram of HIV.AIDS",xlab="HIV.AIDS",col=5,freq=F)#Skewed at right
+lines(density(mydata$HIV.AIDS),col=2,lwd=3)
+
+hist(mydata$thinness..1.19.years,main="Histogram of thinness  1-19 years",xlab="thinness  1-19 years",col=5,freq=F)#Normal distribution
+lines(density(mydata$thinness..1.19.years),col=2,lwd=3)
+
+hist(mydata$thinness.5.9.years,main="Histogram of thinness 5-9 years",xlab="thinness 5-9 years",col=5,freq=F)#Normal distribution
+lines(density(mydata$thinness.5.9.years),col=2,lwd=3)
+
+
+hist(mydata$Income.composition.of.resources,main="Histogram of Income.composition.of.resources",xlab="Income.composition.of.resources",col=5,freq=F)#Normal distribution
+lines(density(mydata$Income.composition.of.resources),col=2,lwd=3)
+
+hist(mydata$Schooling,main="Histogram of Schooling",xlab="Schooling",col=5,freq=F)#Normal distribution
+lines(density(mydata$Schooling),col=2,lwd=3)
+
+
+
+```
+
+${\bf\large Dealing\ with\ missing\ values}$
+
+Here, by looking at the above histogram of all the variables,we concluded that each variables are skewed or normally distributed. Hence Median would be the best imputed value.So we replace na.values with median of respective variables.
+
+```{r}
+df1=data
+for(i in 1:ncol(df1)){
+  df1[is.na(df1[,i]),i] <- median(df1[,i] , na.rm = T)
+}
+data=df1
+sum(is.na(df1))
+```
+
+Now, Our data set has Zero na.values, so we proceed to data analysis part.
+
+${\bf\Large Exploratory\ Data\ Analysis:}$
+
+```{r}
+
+library(ggplot2)
+```
+
+${\large\bf Life\ Expectancy\ Country\ Wise}$
+
+```{r}
+#plots
+p1<-ggplot(data=df1,aes(x=Country,y=Life.expectancy))+geom_boxplot(fill="gold1")+theme(axis.text.x = element_text(angle = 90))+ggtitle("Country vs life expectancy")
+p1
+```
+
+Japan is the country with the highest Life expectancy value followed by Sweden and Sierra Leone has the lowest Life expectancy value
+
+${\bf\Large Life\ Expectancy\ Comparison\ in\ Developed\ and\ Developing\ Countries}$
+
+```{r}
+p2<-ggplot(data=df1,aes(x=Status,y=Life.expectancy))+geom_boxplot(fill="blue")+theme(axis.text.x = element_text(angle = 90))+
+  ggtitle("status vs life expectancy")
+p2
+
+```
+
+The life expectancy value in case of developing countries is low whereas in case of Developed countries the life expectancy value is comparatively high.
+
+${\Large\bf How\ different\ diseases\ affect\ life\ expectancy\ in\ developed\ and\ developing\ countries}$
+
+```{r}
+#life_expectancy vs heptitis_B
+p3 = ggplot(data=df1 , aes(y = Life.expectancy, x = Hepatitis.B,fill= Status ))
+f3 = p3 + geom_point() + ggtitle("Life Expectancy vs Hepatitis.B") + stat_smooth()
+f3
+```
+
+There is a slight decrease in the life expectancy value in case of developed countries whereas in case of Developed countries the life expectancy value is gradually rising which means that developing countries are taking measures for setting up vaccine of hepatitis B
+
+```{r}
+#life_expectancy vs measles
+p4 = ggplot(data=df1 , aes(y = Life.expectancy, x = Measles ,fill=Status))
+f4 = p4 + geom_point() + ggtitle("Life Expectancy vs Measles") + stat_smooth()
+f4
+```
+
+In case of Measles, according to the graph the developed countries seems to have vaccines available to tackle measles whereas developing countries life expectancy values is decreasing day by day maybe because of lack of resources to handle measles
+
+```{r}
+#life_expectancy vs polio
+p6 = ggplot(data=df1 , aes(y = Life.expectancy, x = Polio,fill=Status ))
+f6 = p6 + geom_point() + ggtitle("Life Expectancy vs Polio") + stat_smooth()
+f6
+```
+
+Developed countries seems to have successfully eradicated polio diesease because of vaccines whereas in developing countries there was low expectancy value initially but now it is gradually increasing maybe because of proper doses being given
+
+```{r}
+#life_expectancy vs diphtheria
+p8 = ggplot(data=df1 , aes(y = Life.expectancy, x = Diphtheria,fill=Status))
+f8 = p8 + geom_point() + ggtitle("Life Expectancy vs Diphtheria") + stat_smooth()
+f8
+```
+
+Developed countries seems to have successfully eradicated diptheria diesease because of vaccines whereas in developing countries there was low expectancy value initially but now it is gradually increasing maybe because of proper doses being given
+
+```{r}
+#life_expectancy vs HIV/AIDS
+p9 = ggplot(data=df1 , aes(y = Life.expectancy, x = HIV.AIDS,fill=Status ))
+f9 = p9 + geom_point() + ggtitle("Life Expectancy vs HIV/AIDS") + stat_smooth()
+f9
+```
+
+The graph shows that developing countries still have not been able to handle hiv/aids at all as the life expectancy value is decreasing at a rapid range. This can be due to rising population and no education been given
+
+${\bf\Large What\ effect\ does\ schooling\ and\ alcohol\ have\ on\ life\ expectancy}$
+
+```{r}
+#life_expectancy vs schooling
+p11 = ggplot(data=df1 , aes(y = Life.expectancy, x = Schooling ,fill=Status))
+f11 = p11 + geom_point() + ggtitle("Life Expectancy vs Schooling") + stat_smooth()
+f11
+
+```
+
+Schooling can effect life expectancy more in developing countries than developed countries. This may be because education is more established and prevalent in wealthier countries.
+
+```{r}
+#life_expectancy vs alcohol
+p12 = ggplot(data=df1 , aes(y = Life.expectancy, x = Alcohol ,fill=Status))
+f12 = p12 + geom_point() + ggtitle("Life Expectancy vs Alcohol") + stat_smooth()
+f12
+
+```
+
+I'm guessing that this is due to the fact that only wealthier countries can afford alcohol or the consumption of alcohol is more prevalent among wealthier populations.
+
+That is why developing countries and alcohol have positive relation and developed countries and alcohol have negative relation.
+
+${\Large\bf Fitting\ a\ multiple\ regression\ model }$
+
+**Baseline Model:**
+
+At first, we are making model taking Life Expectancy as the response variable and all others as predictors.
+
+```{r message=FALSE}
+data3 = data[,-c(1:3)]
+attach(data3)
+model1 = lm(Life.expectancy ~ .,data3)
+summary(model1)
+```
+
+${\large\bf Plotting\ the\ Model:}$
+
+```{r warning=FALSE}
+library(ggplot2)
+library(ggfortify)
+autoplot(model1)
+```
+
+Clearly from the above summary of model1 we can conclude that the following parameters such as percentage expenditure, population, thinness(1-19 years), thinness(5-9 years), income composition of resources are insignificant(p-value of t-test is more than 0.05) to estimate our predictor variable.So the above variables are dropped from our model.\
+
+${\large\bf MultiCollinearity\ Test:}$
+
+VIF Test (Variance Inflation FActor)
+
+```{r warning=FALSE}
+library(carData)
+library(car)
+vif(model1)
+```
+
+Clearly variables like infant deaths, under five deaths have high vif values($>100$) that means it's highly correlated with other variables.So it violates the independency of explanatory variables(X) so it will be a wise decision to drop these variables.\
+So we are going to drop 7 variables percentage expenditure, population, thinness(1-19 years), thinness(5-9 years), income composition of resources, infant deaths, under five deaths as these are coming under the low significance case and very high multicollinearity case.
+
+${\large\bf Improved\ Model\ 2}$
+
+```{r}
+model2 = lm(Life.expectancy~.-percentage.expenditure-thinness..1.19.years-thinness.5.9.years-Income.composition.of.resources-Population-infant.deaths-under.five.deaths, data3)
+summary(model2)
+```
+
+After removing the 7 insignificant variables model2 is been made and $R^2$ value of model2 is $80.02%$ that means it decreases by only $0.01%$.
+
+${\Large\bf Plotting\ the\ Model\ 4:}$
+
+```{r warning=FALSE}
+library(ggplot2)
+library(ggfortify)
+autoplot(model2)
+```
+
+${\large\bf Checkig\ Interaction\ terms:}$ Now we can check whether there is correlation between any two variables or not by the help of correlation plot and correlation matrix.
+
+```{r warning=FALSE}
+library(corrplot)
+corrplot(cor(data3),type="upper",method="circle",title="Correlation plot between variables",
+         mar=c(0.7,0.7,0.7,0.7),tl.cex = 0.6)
+```
+
+```{r}
+cor(Adult.Mortality,HIV.AIDS)
+cor(BMI, thinness..1.19.years)
+cor(BMI, thinness.5.9.years)
+cor(BMI, Schooling)
+cor(Polio, Diphtheria)
+cor(Schooling, Income.composition.of.resources)
+```
+
+From the above correlation plot and correlation value of each variables it is found that a decent amount of correlation exsit between Adult-mortality & HIV/AIDS, BMI & thinness(1-19years), BMI & thinness(5-9years), BMI & Schooling, Polio & Diphtheria, Schooling & Income-composition of resources.So their interaction terms is been added in our model.
+
+```{r}
+test1 = lm(Life.expectancy~.-percentage.expenditure-thinness..1.19.years-thinness.5.9.years-Income.composition.of.resources-Population-infant.deaths-under.five.deaths+Adult.Mortality:HIV.AIDS + Schooling:Income.composition.of.resources+BMI:Schooling + Polio:Diphtheria+BMI: thinness..1.19.years + BMI:thinness.5.9.years , data3)
+summary(test1)
+```
+
+From the above testing model we can see that Polio & Diphtheria,BMI & thinness..1.19.years ,BMI & thinness.5.9.years are not significant as their p-values are greater than $0.05$.So we can drop this interaction terms.
+
+${\large\bf Improved\ Model\ 3:}$
+
+```{r}
+model3 = lm(Life.expectancy~.-percentage.expenditure-thinness..1.19.years-thinness.5.9.years-Income.composition.of.resources-Population-infant.deaths-under.five.deaths+Adult.Mortality:HIV.AIDS + Schooling:Income.composition.of.resources +BMI: Schooling, data3)
+summary(model3)
+```
+
+Clearly by adding the above interaction terms cause $3\%$increase in our $R^2$ Value and $R^2$ value become $83\%$. Also this cause a decrement of RSE value to $3.912$.So It's a better model with respect to model2.
+
+${\Large\bf Plotting\ The\ Model\ 3:}$
+
+```{r}
+library(ggplot2)
+library(ggfortify)
+autoplot(model3)
+```
+
+${\large\bf Fixing\ the\ Polynomial\ Terms}$
+
+```{r}
+test4 = lm(Life.expectancy~.-percentage.expenditure-thinness..1.19.years-thinness.5.9.years-Income.composition.of.resources-Population-infant.deaths-under.five.deaths+Adult.Mortality:HIV.AIDS + Schooling:Income.composition.of.resources +BMI: Schooling - HIV.AIDS+poly(HIV.AIDS,2)+poly(Polio,7), data3)
+summary(test4)
+```
+
+From the above plots and summary of testing model we can conclude that the model can be improved by adding the 2nd degree polynomial of HIV/AIDS and 7th degree polynomial of Polio as the $R^2$ value increase to $85.3%$.But on the stake of adding 6 more variables due to the polynomial of Polio the model is improved by only $1%$. So it will be better if the polynomial terms of Polio are dropped.
+
+${\large\bf Improved\ Model\ 4: }$
+
+```{r}
+model4 = lm(Life.expectancy~.-percentage.expenditure-thinness..1.19.years-thinness.5.9.years-Income.composition.of.resources-Population-infant.deaths-under.five.deaths+Adult.Mortality:HIV.AIDS + Schooling:Income.composition.of.resources +BMI:Schooling-HIV.AIDS+poly(HIV.AIDS,2), data3)
+summary(model4)
+```
+
+${\Large\bf Plotting\ The\ Model\ 4:}$
+
+```{r warning=FALSE}
+library(ggfortify)
+autoplot(model4)
+```
+
+${\Large\bf Conclusion\ of\ the\ final\ model:}$
+
+1). $R^2$ value of our final model is $84.18%$.\
+2). From the residual vs fitted graph we can see that the estimated error curve of our final model is almost converge to 0.\
+3). From the QQ-Plot we can see that the our model shows behave like normal except for the tail parts.\
+So our Final model is:
+
+${ {\bf Life\ Expectancy}=(52.18)+(-0.0235) \times {\bf Adult.Mortality}+(0.1314) \times {\bf Alcohol}+(-0.01116)\times {\bf Hepatitis.B}+(-0.000032) \times {\bf Measles} +(0.1943) \times {\bf BMI}+(0.02118) \times {\bf Polio}+(0.08815) \times {\bf Total.expenditure}+(0.0357) \times {\bf Diphtheria}+(0.00005032) \times {\bf GDP}+(0.8188) \times {\bf Schooling} +(-24.14) \times {\bf HIV.AIDS} +(60.78) \times {\bf (HIV.AIDS)^2}+(0.000908) \times {\bf Adult.Mortality:HIV.AIDS}+(0.5342) \times {\bf (Income.composition.of.resources:Schooling)}+(-0.01292) \times { \bf BMI:Schooling} }$
+
+${\Large\bf Summary:}$
+
+-   The dataset although collected by WHO contained a lot of missing values and we saw that most of the missing values were from the countries with very less population and were data collection is a very tedious task.
+
+-   A lot of outliers were detected which could not be removed because doing so we could have losed a lot of informations.
+
+-   Japan although being hit badly by world war II came back very strong and is currently the country with the highest life expectancy followed by Sweden which is a big Achievement.
+
+-   We largely saw how developing countries have very less life expectancy when we see diseases like HIV/AIDS, polio etc and how Schooling plays a big role in increasing the life expectancy of developing countries as people become much more educated and help improve the welfare and healthcare of the country along with economy.
+
+-   Alcoholism is a big issue in the developed country where people have good amount of money to spend and this shows how careless are people in terms of their health when it comes to alcoholism.
+
+-   Life Expectancy model is affected by the factors Adult mortality rate,GDP of the country, by the diseases named as Hepatitis B,Polio, Measles, Diphtheria,HIV/AIDS, and by some their factors too such as BMI, Alcoholism, Total expenditure, Schooling.
