@@ -19,7 +19,7 @@ The data-set related to life expectancy, health factors for 193 countries has be
 
  ## Data Visualization 
  
- ![This is an image](![image](https://user-images.githubusercontent.com/96919264/147963829-1ac7a98b-739e-4dfe-a0a2-9a05bb635c62.png)
-)
+ ![image](https://user-images.githubusercontent.com/96919264/147963916-ab2b7557-79e5-42a9-bd20-4a4b1a299740.png)
+
  
  
