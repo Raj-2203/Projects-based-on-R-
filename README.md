@@ -21,7 +21,7 @@ The data-set related to life expectancy, health factors for 193 countries has be
  
  
 ![image](https://user-images.githubusercontent.com/96919264/147964022-c5f5e767-c609-419a-ad85-98c4c12c8b8f.png)
-#### _Japan is the country with the highest Life expectancy value followed by Sweden and Sierra Leone has the lowest Life expectancy value
+#### _Japan is the country with the highest Life expectancy value followed by Sweden and Sierra Leone has the lowest Life expectancy value_
 
 
 
@@ -57,7 +57,21 @@ The data-set related to life expectancy, health factors for 193 countries has be
 ### 5) 
 ![image](https://user-images.githubusercontent.com/96919264/147964973-8ba93a24-0450-4a7e-83f6-5383ca4a6be2.png)
 
-#### _The graph shows that developing countries still have not been able to handle HIV/AIDS at all as the life expectancy value is decreasing at a rapid range. This can be due to rising population and poor awareness about AIDS.
+#### _The graph shows that developing countries still have not been able to handle HIV/AIDS at all as the life expectancy value is decreasing at a rapid range. This can be due to rising population and poor awareness about AIDS._
+
+
+
+
+### EFFECT OF SOCIAL PARAMETERS ON LIFE EXPECTANCY
+
+### 1) 
+![image](https://user-images.githubusercontent.com/96919264/147965185-c0f5f599-5970-4ead-b13d-13d308674b29.png)
+#### _Developing countries and alcohol have positive relation and developed countries and alcohol have negative relation_
+
+
+### 2) 
+![image](https://user-images.githubusercontent.com/96919264/147965253-c8bc6f55-c56f-420e-af73-42b63b04c895.png)
+#### _Schooling can effect life expectancy more in developing countries than developed countries. Due to schooling increasing literacy rate can indirectly affect as good medical facilities for saving life._
 
 
 
