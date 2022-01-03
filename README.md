@@ -19,7 +19,25 @@ The data-set related to life expectancy, health factors for 193 countries has be
 
  ## Data Visualization 
  
- ![image](https://user-images.githubusercontent.com/96919264/147963916-ab2b7557-79e5-42a9-bd20-4a4b1a299740.png)
+![image](https://user-images.githubusercontent.com/96919264/147964022-c5f5e767-c609-419a-ad85-98c4c12c8b8f.png)
+#### _Japan is the country with the highest Life expectancy value followed by Sweden and Sierra Leone has the lowest Life expectancy value
 
- 
+![image](https://user-images.githubusercontent.com/96919264/147964231-053585ff-662d-4db8-9600-9bce4195cab5.png)
+
+#### _The life expectancy value in case of developing countries is low whereas in case of Developed countries the life expectancy value is comparatively high.
+
+### Effect On Life Expectancy 
+
+#### 1)
+![image](https://user-images.githubusercontent.com/96919264/147964363-57e8cb2e-8a56-41d0-82c8-9c76ef5e2f4d.png)
+#### _here is a slight decrease in the life expectancy value in case of developed countries whereas in case of Developed countries the life expectancy value is gradually rising which means that developing countries are taking measures for setting up vaccine of hepatitis B
+
+#### 2) 
+![image](https://user-images.githubusercontent.com/96919264/147964487-89452b2f-1fe4-4ce7-bdd2-313bc42a0bff.png)
+#### _In case of Measles, according to the graph the developed countries seems to have vaccines available to tackle measles whereas developing countries life expectancy values is decreasing day by day maybe because of lack of resources to handle measles
+
+
+
+
+
  
