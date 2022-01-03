@@ -127,7 +127,7 @@ The data-set related to life expectancy, health factors for 193 countries has be
 
 2)A lot of outliers were detected which could not be removed because doing so we could have losed a lot of informations.
 
-3) Japan although being hit badly by world war II came back very strong and is currently the country with the highest life expectancy followed by Sweden which is a big Achievement.
+3)Japan although being hit badly by world war II came back very strong and is currently the country with the highest life expectancy followed by Sweden which is a big Achievement.
 
 4)We largely saw how developing countries have very less life expectancy when we see diseases like HIV/AIDS, polio etc and how Schooling plays a big role in increasing the life expectancy of developing countries as people become much more educated and help improve the welfare and healthcare of the country along with economy.
 
