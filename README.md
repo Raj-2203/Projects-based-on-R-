@@ -120,10 +120,15 @@ The data-set related to life expectancy, health factors for 193 countries has be
 
 ## Summary Of Project:
 1)The dataset although collected by WHO contained a lot of missing values and we saw that most of the missing values were from the countries with very less population and were data collection is a very tedious task.
+
 2)A lot of outliers were detected which could not be removed because doing so we could have losed a lot of informations.
+
 3) Japan although being hit badly by world war II came back very strong and is currently the country with the highest life expectancy followed by Sweden which is a big Achievement.
+
 4)We largely saw how developing countries have very less life expectancy when we see diseases like HIV/AIDS, polio etc and how Schooling plays a big role in increasing the life expectancy of developing countries as people become much more educated and help improve the welfare and healthcare of the country along with economy.
+
 5)Alcoholism is a big issue in the developed country where people have good amount of money to spend and this shows how careless are people in terms of their health when it comes to alcoholism.
+
 6)Life Expectancy model is affected by the factors Adult mortality rate,GDP of the country, by the diseases named as Hepatitis B,Polio, Measles, Diphtheria,HIV/AIDS, and by some their factors too such as BMI, Alcoholism, Total expenditure, Schooling.
 
 
