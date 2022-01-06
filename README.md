@@ -1,7 +1,15 @@
 # Projects-based-on-R-
 
 # Statistical Analysis of Life Expectancy Dataset
+#### submitted by 
+Raj Khandagale(215280002)(Me)
+Avinandan Patel(215280043)
+Syliva Vincent(215280005)
+Vishakha Verma(215280019)
+Inderesh Singh(215280011)
+Harsh jaiswal(215280022)
 
+#### Guidance :- Prof. Radhendushka Shrivastava ( IIT Bombay )
 
 
 ## About Dataset 
